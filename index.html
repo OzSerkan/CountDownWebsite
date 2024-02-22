@@ -1,138 +1,132 @@
-556
 <!DOCTYPE html>
-<html lang="">
-
+<html lang="en">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Micro+5&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
-    <meta charset="utf-8">
-    <title></title>
-    <style>
-        body {
-            font-family: "Bebas Neue", sans-serif;
-        }
+  <meta charset="utf-8">
+  <title>Countdown Timer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
 
+    #myVideo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-        #myVideo {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-        }
+    .content {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: #f1f1f1;
+    }
 
-        .content {
-            position: fixed;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            color: #f1f1f1;
-            width: 100%;
-            padding: 20px;
-            font-family: "Bebas Neue", sans-serif;
-        }
+    .countdown-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10%;
+    }
 
-        .countdown-container {
-            display: flex;
-            width: 100%;
-            max-width: 80%;
-            padding: 0 10% 0 10%;
-            justify-content: space-between;
+    .days-container,
+    .hours-container,
+    .minutes-container,
+    .seconds-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0,0,0,0.1);
+      width: calc(25% - 20px);
+      margin: 10px;
+      border-radius: 99px;
+    }
 
-            font-family: "Bebas Neue", sans-serif;
-        }
+    .days,
+    .hours,
+    .minutes,
+    .seconds {
+      font-size: calc(1em + 0.5vw);
+      margin: 10px 0;
+    }
 
-        .days-container,
-        .hours-container,
-        .minutes-container,
-        .seconds-container {
-            font-family: "Bebas Neue", sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.1);
-            width: 140px;
-            height: 120px;
-            border-radius: 99px;
-        }
+    .days-label,
+    .hours-label,
+    .minutes-label,
+    .seconds-label {
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
 
-        .days,
-        .hours,
-        .minutes,
-        .seconds {
-            font-family: "Bebas Neue", sans-serif;
-            font-size: 3.5em;
-            margin: 5px 0;
-        }
+    @media (min-width: 768px) {
+      .countdown-container {
+        justify-content: space-around;
+      }
 
-
-        .days-label,
-        .hours-label,
-        .minutes-label,
-        .seconds-label {
-            font-family: "Bebas Neue", sans-serif;
-            text-transform: uppercase;
-            font-size: larger;
-        }
-    </style>
+      .days-container,
+      .hours-container,
+      .minutes-container,
+      .seconds-container {
+        width: calc(33.33% - 20px);
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <video autoplay muted loop id="myVideo">
-        <source src="./Animasyon1.mp4" type="video/mp4">
-    </video>
-    <div class="content">
+  <video autoplay muted loop id="myVideo">
+    <source src="./Animasyon1.mp4" type="video/mp4">
+  </video>
+  <div class="content">
+    <section class="countdown-container">
+      <div class="days-container">
+        <div class="days"></div>
+        <div class="days-label">days</div>
+      </div>
 
-        <section class="countdown-container">
-            <div class="days-container">
-                <div class="days"></div>
-                <div class="days-label">days</div>
-            </div>
+      <div class="hours-container">
+        <div class="hours"></div>
+        <div class="hours-label">hours</div>
+      </div>
 
-            <div class="hours-container">
-                <div class="hours"></div>
-                <div class="hours-label">hours</div>
-            </div>
+      <div class="minutes-container">
+        <div class="minutes"></div>
+        <div class="minutes-label">minutes</div>
+      </div>
 
-            <div class="minutes-container">
-                <div class="minutes"></div>
-                <div class="minutes-label">minutes</div>
-            </div>
+      <div class="seconds-container">
+        <div class="seconds"></div>
+        <div class="seconds-label">seconds</div>
+      </div>
+    </section>
+  </div>
 
-            <div class="seconds-container">
-                <div class="seconds"></div>
-                <div class="seconds-label">seconds</div>
-            </div>
+  <script>
+    const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
 
-        </section>
-    </div>
+    const countdown = new Date("19 January 2024 23:00:00").getTime();
+    const daysElement = document.querySelector(".days");
+    const hoursElement = document.querySelector(".hours");
+    const minutesElement = document.querySelector(".minutes");
+    const secondsElement = document.querySelector(".seconds");
 
-    <script>
-        const second = 1000,
-            minute = second * 60,
-            hour = minute * 60,
-            day = hour * 24;
+    setInterval(function () {
+      let now = new Date().getTime();
+      let distance = countdown - now;
 
-        const countdown = new Date("19 January 2024 23:00:00").getTime();
-        const daysElement = document.querySelector(".days");
-        const hoursElement = document.querySelector(".hours");
-        const minutesElement = document.querySelector(".minutes");
-        const secondsElement = document.querySelector(".seconds");
-        setInterval(function () {
-
-            let now = new Date().getTime();
-            let distance = countdown - now;
-
-            daysElement.textContent = Math.floor(distance / (day));
-            hoursElement.textContent = Math.floor((distance % (day)) / (hour));
-            minutesElement.textContent = Math.floor((distance % (hour)) / (minute));
-            secondsElement.textContent = Math.floor((distance % (minute)) / second);
-
-        }, second);
-    </script>
+      daysElement.textContent = Math.floor(distance / (day));
+      hoursElement.textContent = Math.floor((distance % (day)) / (hour));
+      minutesElement.textContent = Math.floor((distance % (hour)) / (minute));
+      secondsElement.textContent = Math.floor((distance % (minute)) / second);
+    }, second);
+  </script>
 </body>
-
 </html>
